@@ -1,0 +1,17 @@
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+
+# Senhas e Variáveis de Ambiente (CRÍTICO)
+.env
+.streamlit/secrets.toml
+
+# Arquivos gerados pelo Python e Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
