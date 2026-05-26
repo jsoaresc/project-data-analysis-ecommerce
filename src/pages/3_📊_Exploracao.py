@@ -6,7 +6,6 @@ st.markdown("Nesta seção, exploramos as relações do banco de dados relaciona
 
 conn = st.connection("supabase", type="sql")
 
-# Escreve a Query SQL com o JOIN
 query_pagamentos = """
 SELECT 
     p.payment_type AS "Método de Pagamento", 
