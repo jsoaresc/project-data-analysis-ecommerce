@@ -173,3 +173,35 @@ def obter_serie_temporal_rota(_conn, estado_origem, estado_destino, categoria_se
     ORDER BY mes_referencia;
     """
     return _conn.query(query)
+
+@st.cache_data(ttl="5m")
+def obter_ranking_categorias_meses(_conn, estado_vendedor, estado_comprador, meses):
+    condicoes = ["o.order_status = 'delivered'"]
+
+    if estado_vendedor != "Todos os Estados":
+        condicoes.append(f"s.seller_state = '{estado_vendedor}'")
+
+    if estado_comprador != "Todos os Estados":
+        condicoes.append(f"c.customer_state = '{estado_comprador}'")
+        
+    if meses:
+        meses_str = ", ".join(map(str, meses))
+        condicoes.append(f"EXTRACT(MONTH FROM CAST(o.order_purchase_timestamp AS TIMESTAMP)) IN ({meses_str})")
+
+    clausula_where = " AND ".join(condicoes)
+
+    query = f"""
+    SELECT 
+        COALESCE(prod.product_category_name, 'não informada') AS "Categoria", 
+        SUM(oi.price) AS "receita_total",
+        COUNT(oi.order_item_id) AS "volume_vendas"
+    FROM olist_order_items_dataset oi
+    JOIN olist_orders_dataset o ON oi.order_id = o.order_id
+    JOIN olist_customers_dataset c ON o.customer_id = c.customer_id
+    JOIN olist_sellers_dataset s ON oi.seller_id = s.seller_id
+    LEFT JOIN olist_products_dataset prod ON oi.product_id = prod.product_id
+    WHERE {clausula_where}
+    GROUP BY prod.product_category_name
+    """
+    
+    return _conn.query(query)

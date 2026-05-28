@@ -8,6 +8,7 @@ st.set_page_config(layout="wide", page_title="Análise por Estado")
 
 st.title("🏛️ Análise Individualizada por Estado")
 st.markdown("Investigação das relações logísticas de compra e venda por estado, segmentadas por categoria de produto.")
+st.markdown(f"Os dados compreendem o período de setembro de 2016 até agosto de 2018.")
 
 conn = st.connection("supabase", type="sql")
 
@@ -120,10 +121,14 @@ if categoria_selecionada != "Todas as Categorias":
     )
 
 st.markdown("---")
+st.markdown(f"#### Rankings de importação e exportação interestadual de {estado_selecionado}")
+st.markdown(f"O gráfico à **esquerda** exibe, em ordem decrescente, o ranking dos estados para onde {estado_selecionado} mais **vendeu** {categoria_selecionada}, de 09/2016 à 08/2016.")
+st.markdown(f"O gráfico à **direita** exibe, em ordem decrescente, o ranking dos estados de onde {estado_selecionado} mais **comprou** {categoria_selecionada}, de 09/2016 à 08/2016.")
+
 col_controle, _ = st.columns([1, 1])
 with col_controle:
     metrica_graficos = st.radio(
-        "Métrica de exibição dos gráficos:",
+        "Selecione a métrica de exibição dos gráficos:",
         options=["Quantidade de Itens", "Valor Financeiro (R$)"],
         horizontal=True
     )
@@ -171,6 +176,9 @@ with col_graf2:
 
 
 st.markdown("---")
+st.markdown(f"O gráfico à **esquerda** exibe, em ordem decrescente, as categorias que {estado_selecionado} mais **vendeu**")
+st.markdown(f"O gráfico à **direita** exibe, em ordem decrescente, o ranking das categorias que {estado_selecionado} mais **comprou**")
+
 st.markdown("💡 *Dica: Clique em uma das barras de categoria abaixo para refinar os indicadores gerais.*")
 col_cat1, col_cat2 = st.columns(2)
 

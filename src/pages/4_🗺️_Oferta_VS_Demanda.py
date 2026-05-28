@@ -20,45 +20,45 @@ categoria_selecionada = st.sidebar.selectbox(
     index=0
 )
 
-ocultar_sp = st.sidebar.checkbox("Ocultar fluxo interno (SP ➔ SP)", value=False)
+# ocultar_sp = st.sidebar.checkbox("Ocultar fluxo interno (SP ➔ SP)", value=False)
 
-st.sidebar.markdown("---")
-st.sidebar.info("A seleção acima afeta automaticamente todos os gráficos desta página.")
+# st.sidebar.markdown("---")
+# st.sidebar.info("A seleção acima afeta automaticamente todos os gráficos desta página.")
 
 with st.spinner('Processando dados do banco...'):
-    df_dados = obter_dados_oferta_demanda(conn, categoria_selecionada, ocultar_sp)
+    df_dados = obter_dados_oferta_demanda(conn, categoria_selecionada, ocultar_sp=False)
 
 if not df_dados.empty:
 
-    st.subheader("Densidade de Fluxo Logístico")
-    st.markdown("""
-    O eixo **X (Demanda)** indica o estado do comprador e o eixo **Y (Oferta)** indica o estado do vendedor.
-    """)
+    # st.subheader("Densidade de Fluxo Logístico")
+    # st.markdown("""
+    # O eixo **X (Demanda)** indica o estado do comprador e o eixo **Y (Oferta)** indica o estado do vendedor.
+    # """)
     
-    fig_heatmap = px.density_heatmap(
-        df_dados, 
-        x="Estado_Cliente",
-        y="Estado_Vendedor",
-        z="Volume_Vendas",
-        color_continuous_scale="Oranges",
-        labels={
-            "Estado_Cliente": "Estado do Cliente (Demanda)",
-            "Estado_Vendedor": "Estado do Vendedor (Oferta)",
-            "Volume_Vendas": "Itens Vendidos"
-        }
-    )
+    # fig_heatmap = px.density_heatmap(
+    #     df_dados, 
+    #     x="Estado_Cliente",
+    #     y="Estado_Vendedor",
+    #     z="Volume_Vendas",
+    #     color_continuous_scale="Oranges",
+    #     labels={
+    #         "Estado_Cliente": "Estado do Cliente (Demanda)",
+    #         "Estado_Vendedor": "Estado do Vendedor (Oferta)",
+    #         "Volume_Vendas": "Itens Vendidos"
+    #     }
+    # )
 
-    fig_heatmap.update_layout(
-        xaxis_title="Destino do Produto (Demanda / Comprador)",
-        yaxis_title="Origem do Produto (Oferta / Vendedor)",
-        coloraxis_colorbar=dict(title="Volume"),
-        margin=dict(l=40, r=40, t=20, b=40)
-    )
+    # fig_heatmap.update_layout(
+    #     xaxis_title="Destino do Produto (Demanda / Comprador)",
+    #     yaxis_title="Origem do Produto (Oferta / Vendedor)",
+    #     coloraxis_colorbar=dict(title="Volume"),
+    #     margin=dict(l=40, r=40, t=20, b=40)
+    # )
 
-    fig_heatmap.update_xaxes(categoryorder='category ascending')
-    fig_heatmap.update_yaxes(categoryorder='category ascending')
+    # fig_heatmap.update_xaxes(categoryorder='category ascending')
+    # fig_heatmap.update_yaxes(categoryorder='category ascending')
 
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    # st.plotly_chart(fig_heatmap, use_container_width=True)
 
     st.markdown("---")
     st.subheader("📊 Ranking de Volume por Estado")

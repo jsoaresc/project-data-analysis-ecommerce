@@ -7,5 +7,6 @@ PALETA = {
     "base": "#3498DB",
     "destaque": "#F39C12",
     "neutra": "#BDC3C7",
-    "selecionada": "#27AE60"
+    "selecionada": "#27AE60",
+    "alerta": "#E74C3C"
 }
